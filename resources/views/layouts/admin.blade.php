@@ -35,7 +35,7 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
             <div class="sidebar-brand-icon">
-                <i class="fas fa-university"></i>
+                <img src="{{ asset('img/Logoudi.png') }}" alt="Logo-udi">
             </div>
             <div class="sidebar-brand-text p-2">Mejora<span class="text-warning">Soft</span></div>
         </a>
