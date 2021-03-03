@@ -33,11 +33,11 @@
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
+        <a class="sidebar-brand bg-gradient-warning d-flex align-items-center justify-content-center" href="{{ route('home') }}">
             <div class="sidebar-brand-icon">
                 <img src="{{ asset('img/Logoudi.png') }}" alt="Logo-udi">
             </div>
-            <div class="sidebar-brand-text p-2">Mejora<span class="text-warning">Soft</span></div>
+            <div class="sidebar-brand-text p-2">Mejora<span class="text-primary">Soft</span></div>
         </a>
 
         <!-- Divider -->
