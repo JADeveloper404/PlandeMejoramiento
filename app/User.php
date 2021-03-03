@@ -47,8 +47,6 @@ class User extends Authenticatable
     }
 
     public function index(){
-
-
         return view('usuarios.index');
     }
 

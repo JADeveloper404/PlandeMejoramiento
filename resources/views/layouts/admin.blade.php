@@ -14,6 +14,8 @@
     <!-- Fonts -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
 
     @yield('styles')
     <!-- Styles -->
@@ -32,10 +34,10 @@
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
-            <div class="sidebar-brand-icon rotate-n-15">
-                <!--<i class="fas fa-laugh-wink"></i>-->
+            <div class="sidebar-brand-icon">
+                <i class="fas fa-university"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">Plan de Mejoramiento</div>
+            <div class="sidebar-brand-text p-2">Mejora<span class="text-warning">Soft</span></div>
         </a>
 
         <!-- Divider -->
@@ -71,7 +73,7 @@
             </div>
         </li>
 
-        @if(Auth::user()->rol->nombre=="Decano")
+        {{-- @if(Auth::user()->rol->nombre=="Decano")
         <!-- Nav Item - Planes -->
         <li class="nav-item {{ Nav::isRoute('planes') }}">
             <a class="nav-link collapsed" href="" data-toggle="collapse" data-target="#collapsePlanes" aria-expanded="true" aria-controls="collapsePlanes">
@@ -157,6 +159,16 @@
             </div>
         </li>
 
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+        <!--  Nav Item - Manuelaes
+        <li class="nav-item {{ Nav::isRoute('manuales') }}">
+            <a class="nav-link" href="{{ route('manuales') }}" >
+                <i class="fas fa-2x text-gray-300 fa-book"></i>
+                <span>{{ __('Manuales') }}</span>
+            </a>
+        </li> --> --}}
+
         @if(Auth::user()->rol->nombre=="Decano")
                  <!-- Nav Item - Roles -->
         <li class="nav-item {{ Nav::isRoute('roles') }}">
@@ -172,16 +184,6 @@
             </div>
         </li>
         @endif
-
-        <!-- Divider -->
-        <hr class="sidebar-divider d-none d-md-block">
-        <!--  Nav Item - Manuelaes 
-        <li class="nav-item {{ Nav::isRoute('manuales') }}">
-            <a class="nav-link" href="{{ route('manuales') }}" >
-                <i class="fas fa-2x text-gray-300 fa-book"></i>
-                <span>{{ __('Manuales') }}</span>
-            </a>
-        </li> -->
 
         <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
