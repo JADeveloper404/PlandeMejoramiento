@@ -37,7 +37,7 @@
             <div class="sidebar-brand-icon">
                 <img src="{{ asset('img/Logoudi.png') }}" alt="Logo-udi">
             </div>
-            <div class="sidebar-brand-text p-2">Mejora<span class="text-primary">Soft</span></div>
+            <div class="sidebar-brand-text p-2">Mejora<span class="text-warning">Soft</span></div>
         </a>
 
         <!-- Divider -->
