@@ -92,9 +92,7 @@ trait AuthenticatesUsers
      */
     protected function credentials(Request $request)
     {
-        $credenciales= $request->only($this->username(), 'password');
-        //$credenciales = array_add($credenciales, 'estado', 'Activado');
-        return $credenciales;
+        return $request->only($this->username(), 'password');
     }
 
     /**

@@ -5,6 +5,7 @@ namespace Maatwebsite\Excel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
+use Maatwebsite\Excel\Concerns\HasReferencesToOtherSheets;
 use Maatwebsite\Excel\Concerns\SkipsUnknownSheets;
 use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
@@ -106,11 +107,23 @@ class Reader
             $this->loadSpreadsheet($import, $this->reader);
 
             ($this->transaction)(function () use ($import) {
+                $sheetsToDisconnect = [];
+
                 foreach ($this->sheetImports as $index => $sheetImport) {
                     if ($sheet = $this->getSheet($import, $sheetImport, $index)) {
                         $sheet->import($sheetImport, $sheet->getStartRow($sheetImport));
-                        $sheet->disconnect();
+
+                        // when using WithCalculatedFormulas we need to keep the sheet until all sheets are imported
+                        if (!($sheetImport instanceof HasReferencesToOtherSheets)) {
+                            $sheet->disconnect();
+                        } else {
+                            $sheetsToDisconnect[] = $sheet;
+                        }
                     }
+                }
+
+                foreach ($sheetsToDisconnect as $sheet) {
+                    $sheet->disconnect();
                 }
             });
 
@@ -141,13 +154,24 @@ class Reader
 
         $this->loadSpreadsheet($import);
 
-        $sheets = [];
+        $sheets             = [];
+        $sheetsToDisconnect = [];
         foreach ($this->sheetImports as $index => $sheetImport) {
             $calculatesFormulas = $sheetImport instanceof WithCalculatedFormulas;
             if ($sheet = $this->getSheet($import, $sheetImport, $index)) {
                 $sheets[$index] = $sheet->toArray($sheetImport, $sheet->getStartRow($sheetImport), null, $calculatesFormulas);
-                $sheet->disconnect();
+
+                // when using WithCalculatedFormulas we need to keep the sheet until all sheets are imported
+                if (!($sheetImport instanceof HasReferencesToOtherSheets)) {
+                    $sheet->disconnect();
+                } else {
+                    $sheetsToDisconnect[] = $sheet;
+                }
             }
+        }
+
+        foreach ($sheetsToDisconnect as $sheet) {
+            $sheet->disconnect();
         }
 
         $this->afterImport($import);
@@ -172,13 +196,24 @@ class Reader
         $this->reader = $this->getReader($import, $filePath, $readerType, $disk);
         $this->loadSpreadsheet($import);
 
-        $sheets = new Collection();
+        $sheets             = new Collection();
+        $sheetsToDisconnect = [];
         foreach ($this->sheetImports as $index => $sheetImport) {
             $calculatesFormulas = $sheetImport instanceof WithCalculatedFormulas;
             if ($sheet = $this->getSheet($import, $sheetImport, $index)) {
                 $sheets->put($index, $sheet->toCollection($sheetImport, $sheet->getStartRow($sheetImport), null, $calculatesFormulas));
-                $sheet->disconnect();
+
+                // when using WithCalculatedFormulas we need to keep the sheet until all sheets are imported
+                if (!($sheetImport instanceof HasReferencesToOtherSheets)) {
+                    $sheet->disconnect();
+                } else {
+                    $sheetsToDisconnect[] = $sheet;
+                }
             }
+        }
+
+        foreach ($sheetsToDisconnect as $sheet) {
+            $sheet->disconnect();
         }
 
         $this->afterImport($import);
@@ -276,7 +311,9 @@ class Reader
 
             // Load specific sheets.
             if (method_exists($this->reader, 'setLoadSheetsOnly')) {
-                $this->reader->setLoadSheetsOnly(array_keys($sheetImports));
+                $this->reader->setLoadSheetsOnly(
+                    collect($worksheetNames)->only(array_keys($sheetImports))->all()
+                );
             }
 
             foreach ($sheetImports as $index => $sheetImport) {

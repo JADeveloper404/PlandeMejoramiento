@@ -22,6 +22,7 @@
     "dependencies": {
         "bootstrap-fileinput": "^5.1.3",
         "medium-editor": "^5.23.3",
+        "node-notifier": "^9.0.0",
         "vue": "^2.6.12"
     }
 }

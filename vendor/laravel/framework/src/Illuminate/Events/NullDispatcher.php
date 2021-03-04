@@ -12,7 +12,7 @@ class NullDispatcher implements DispatcherContract
     /**
      * The underlying event dispatcher instance.
      *
-     * @var \Illuminate\Contracts\Bus\Dispatcher
+     * @var \Illuminate\Contracts\Events\Dispatcher
      */
     protected $dispatcher;
 
@@ -65,7 +65,7 @@ class NullDispatcher implements DispatcherContract
      * Register an event listener with the dispatcher.
      *
      * @param  \Closure|string|array  $events
-     * @param  \Closure|string|null  $listener
+     * @param  \Closure|string|array|null  $listener
      * @return void
      */
     public function listen($events, $listener = null)

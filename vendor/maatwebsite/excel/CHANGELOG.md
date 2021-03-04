@@ -3,6 +3,35 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [3.1.27] - 2020-02-22
+
+### Added
+
+- Added SkipsEmptyRows concern
+- Added HasReferencesToOtherSheets concern to allow import of calculated
+
+### Changed
+
+- Bump minimum PhpSpreadsheet version
+- Progressbar NullOutput as fallback
+
+## [3.1.26] - 2020-11-13
+
+### Added
+
+- PHP 8 support
+
+## [3.1.25] - 2020-11-13
+
+### Added
+
+- Added an ability to prepare rows before appending rows to sheet. Just add `prepareRows` method for your export class if needed.
+- Added an ability to catch exceptions from `QueueExport` job. Just add `failed` method for your export class if needed.
+- Added an ability to set locale for queued export. Just implement `Illuminate\Contracts\Translation\HasLocalePreference` for your export.
+- Added `JsonSerializable` support in `Maatwebsite\Excel\Validators\Failure`.
+- Added `$maxExceptions` support in `Maatwebsite\Excel\Jobs\ReadChunk.php`.
+- Added support to upsert models by implementing the `WithUpserts` concern.
+
 ## [3.1.24] - 2020-10-28
 
 ### Added
@@ -69,7 +98,10 @@ All notable changes to this project will be documented in this file.
 - Raw() method now also available on Exportable.
 - Fix for breaking changes in PhpSpreadsheet with empty enclosures.
 
-[Unreleased]: https://github.com/Maatwebsite/Laravel-Excel/compare/3.1.24...HEAD
+[Unreleased]: https://github.com/Maatwebsite/Laravel-Excel/compare/3.1.27...HEAD
+[3.1.27]: https://github.com/Maatwebsite/Laravel-Excel/compare/3.1.26...3.1.27
+[3.1.26]: https://github.com/Maatwebsite/Laravel-Excel/compare/3.1.25...3.1.26
+[3.1.25]: https://github.com/Maatwebsite/Laravel-Excel/compare/3.1.24...3.1.25
 [3.1.24]: https://github.com/Maatwebsite/Laravel-Excel/compare/3.1.23...3.1.24
 [3.1.23]: https://github.com/Maatwebsite/Laravel-Excel/compare/3.1.22...3.1.23
 [3.1.22]: https://github.com/Maatwebsite/Laravel-Excel/compare/3.1.21...3.1.22
